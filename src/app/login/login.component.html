@@ -1,0 +1,127 @@
+<div class="row" *ngIf="!login_success" align="center">
+
+  <div class="col s12">
+    <webcam
+      [height]="300"
+      [width]="300"
+      [trigger]="triggerObservable"
+      (imageCapture)="handleImage($event)"
+      *ngIf="showWebcam"
+      [allowCameraSwitch]="allowCameraSwitch"
+      [switchCamera]="nextWebcamObservable"
+      [videoOptions]="videoOptions"
+      (cameraSwitched)="cameraWasSwitched($event)"
+      (initError)="handleInitError($event)"
+    ></webcam>
+
+  </div>
+
+  <div class="col s12" *ngIf="!showWebcam">
+    <img [src]="webcamImage.imageAsDataUrl" width="300"/>
+  </div>
+
+  <div class="col s4 offset-s4">
+    <input placeholder="Ingrese su cedula"
+           id="dni"
+           type="number"
+           (keyup)="setCc($event)"
+    >
+  </div>
+
+  <div class="col s12">
+    <button class="wabes-effect waves-light btn light-green accent-2"
+            (click)="triggerSnapshot();"
+            *ngIf="showWebcam">
+      Tomar Foto <i class="material-icons left">camera_alt</i>
+    </button>
+    <button class="wabes-effect blue blue-darken-2 waves-light btn lime accent-2"
+            (click)="triggerSnapshot();"
+            *ngIf="!showWebcam">
+      Volver a tomar la foto <i class="material-icons left">camera_alt</i>
+    </button>
+    <button
+      *ngIf="cc && !showWebcam"
+      class="wabes-effect purple lighten-3 waves-light btn" (click)="tryToLogin()">
+      Iniciar Sesion <i class="material-icons right">arrow_forward</i>
+    </button>
+  </div>
+
+  <div class="col s12" *ngIf="loading">
+    <h3 class="text-center">
+      Iniciando reconocimiento de rostro...
+    </h3>
+    <div class="loading-bro">
+      <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">
+        <circle id="loading-inner" cx="75" cy="75" r="60"/>
+      </svg>
+    </div>
+  </div>
+
+</div>
+
+<div class="row pull-top" *ngIf="login_success">
+
+  <div class="col s4">
+    <h2 class="text-center">
+      Bienvenido
+    </h2>
+    <h3>
+      <strong>{{ full_name }}</strong>
+    </h3>
+    <h4>
+      CC: <strong>{{ dni }}</strong>
+    </h4>
+    <h4>
+      Fecha de nacimiento: <strong>{{ date }}</strong>
+    </h4>
+
+    <h5>
+      <button
+        (click)="logout();"
+        class="amber lighten-2 wabes-effect waves-light btn">
+        Cerrar sesión <i class="material-icons right">lock_outline</i>
+      </button>
+    </h5>
+
+  </div>
+
+  <div class="col s8">
+
+
+    <div class="col s4">
+      <img [src]="dni_front" alt="" width="250">
+    </div>
+    <div class="col s4">
+      <img [src]="dni_back" alt="" width="250">
+    </div>
+
+    <div class="col s4">
+      <img [src]="photo" alt="" width="250">
+    </div>
+
+      <div class="row">
+    <div class="col s12">
+      <webcam
+      [height]="300"
+      [width]="300"
+      [trigger]="triggerObservable"
+      (imageCapture)="handleImage($event)"
+      [allowCameraSwitch]="allowCameraSwitch"
+      [switchCamera]="nextWebcamObservable"
+      [videoOptions]="videoOptions"
+      (cameraSwitched)="cameraWasSwitched($event)"
+      (initError)="handleInitError($event)">
+    </webcam>
+    </div>
+  </div>
+
+  </div>
+
+
+
+  <div class="col s12 hidden">
+    <img [src]="webcamImage.imageAsDataUrl" width="300"/>
+  </div>
+
+
+</div>

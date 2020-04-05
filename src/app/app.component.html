@@ -1,0 +1,40 @@
+<div>
+  <div class="row" *ngIf="state !== FIRST && HIDDEN !== true">
+    <div class="col s12 pull-top">
+      <button class="wabes-effect waves-light btn light-blue accent-3" (click)="setFirst()">
+        Volver al inicio <i class="material-icons left">arrow_back</i>
+      </button>
+    </div>
+  </div>
+  <div class="row" *ngIf="state === FIRST">
+    <div class="col s12" align="center">
+      <h2 class="text-center">
+        Bienvenido a <span class="text-green">ALIE</span>
+      </h2>
+      <img src="{{ imageSrc }}" alt="">
+    </div>
+    <div class="col s6" align="center">
+      <button class="waves-effect waves-light btn btn-large indigo darken-1" (click)="setRegister()">
+        <i class="material-icons left">group_add</i>
+        Registrarse
+      </button>
+    </div>
+    <div class="col s6" align="center">
+      <button class="waves-effect waves-light btn btn-large cyan darken-2" (click)="setLogin()">
+        Iniciar Sesion
+        <i class="material-icons right">fingerprint</i>
+      </button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="state === REGISTER">
+    <app-register></app-register>
+  </div>
+
+  <div class="row" *ngIf="state === LOGIN">
+    <app-login [sign_in]="sign_in" (setHidden)="setHidden($event)"></app-login>
+  </div>
+
+
+
+</div>
